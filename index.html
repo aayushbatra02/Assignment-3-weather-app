@@ -3,33 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <title>Weather App</title>
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
-    <div id="search-container">
-      <input type="text" id="city-name" /><button id="search-button">
-        Search
-      </button>
-    </div>
-    <div id="card">
-      <div id="title">Weather</div>
-      <div id="icon">
-        <img id="icon-image" src="./images/icons/unknown.png" alt="Weather icon" />
+    <div id="weather-container">
+      <div id="search-container">
+        <input type="text" id="city-name" /><button id="search-button">
+          Search
+        </button>
       </div>
-      <div id="error-message"></div>
-      <div id="weather">
-        <div id="temp-container">
-          <span id="long"> <span id="temperature"></span>&#xb0;</span>C
+      <div id="card">
+        <div id="title">Weather</div>
+        <div id="icon">
+          <img
+            id="icon-image"
+            src="./images/icons/unknown.png"
+            alt="Weather icon"
+          />
         </div>
-        <div id="weather-description"></div>
-        <div id="location">
-          <span id="city"></span>,
-          <span id="country"></span>
+        <div id="error-message">Invalid City</div>
+        <div id="weather">
+          <div id="temp-container">
+            <span id="long"> <span id="temperature"></span>&#xb0;</span>C
+          </div>
+          <div id="weather-description"></div>
+          <div id="location">
+            <span id="city"></span>,
+            <span id="country"></span>
+          </div>
         </div>
       </div>
     </div>
-
     <script src="./main/main.js"></script>
   </body>
 </html>

@@ -7,6 +7,7 @@ const city = document.getElementById("city");
 const country = document.getElementById("country");
 const iconImage = document.getElementById("icon-image");
 const errorMessage = document.getElementById("error-message");
+const weatherContainer = document.getElementById("weather-container");
 
 const key = `82005d27a116c2880c8f0fcb866998a0`;
 const weatherTypes = [
@@ -26,7 +27,6 @@ const fetchData = async (lat, lon) => {
     );
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
       const description = data.weather[0].description;
       const tempInKelvin = data.main.temp;
       const tempInCelcius = Math.floor(tempInKelvin - 273.15);
@@ -49,10 +49,20 @@ const fetchData = async (lat, lon) => {
         tempInCelcius: undefined,
         cityName: undefined,
         countryName: undefined,
+        weatherType: undefined,
+        iconId: undefined,
       };
     }
   } catch (e) {
     console.log(e);
+    return {
+      description: undefined,
+      tempInCelcius: undefined,
+      cityName: undefined,
+      countryName: undefined,
+      weatherType: undefined,
+      iconId: undefined,
+    };
   }
 };
 
@@ -96,24 +106,40 @@ const getWeatherHandler = async () => {
   }
 };
 
+const capitalizeFirstLetter = (word) => {
+  word = word.toLowerCase().split("");
+  word[0] = word[0].toUpperCase();
+  word = word.join("");
+  return word;
+};
+
+capitalizeFirstLetter("AaYuSh");
+
 const displayWeatherData = ({
   description,
   tempInCelcius,
   cityName,
   countryName,
   iconId,
+  weatherType,
 }) => {
   if (description === undefined) {
     weather.style.display = "none";
     errorMessage.style.display = "block";
-    errorMessage.innerHTML = "Wrong City";
+    errorMessage.innerHTML = "Invalid City";
   } else {
     temperature.innerHTML = tempInCelcius;
     weatherDescription.innerHTML = description;
-    city.innerHTML = cityName;
+    city.innerHTML = capitalizeFirstLetter(cityName);
     country.innerHTML = countryName;
     iconImage.setAttribute("src", `./images/icons/${iconId}.png`);
-    console.log(iconId);
+    if (weatherTypes.includes(weatherType)) {
+      weatherContainer.style.backgroundImage =
+        "url(/images/background/" + weatherType + ".avif)";
+    } else {
+      weatherContainer.style.backgroundImage =
+        "url(/images/background/default.avif)";
+    }
     weather.style.display = "block";
     errorMessage.style.display = "none";
   }
