@@ -10,8 +10,11 @@ const errorMessage = document.getElementById("error-message");
 const weatherContainer = document.getElementById("weather-container");
 const windSpeed = document.getElementById("wind-speed");
 const humidity = document.getElementById("humidity");
+const card = document.getElementById("card");
+const spinner = document.getElementById("spinner");
 
 const key = `82005d27a116c2880c8f0fcb866998a0`;
+
 const weatherTypes = [
   "Clear",
   "Clouds",
@@ -82,6 +85,14 @@ const getWeatherForCurrentLocation = async () => {
   } else {
     console.log("Geolocation is not supported by this browser.");
   }
+
+  navigator.geolocation.watchPosition(
+    function (position) {},
+    function (error) {
+      if (error.code == error.PERMISSION_DENIED) card.style.display = "block";
+      spinner.style.display = "none";
+    }
+  );
 };
 
 getWeatherForCurrentLocation();
@@ -108,9 +119,12 @@ const capitalizeFirstLetter = (word) => {
 };
 
 const displayWeatherData = (weatherData) => {
+  weatherContainer.appendChild(spinner);
   if (weatherData === undefined || weatherData === "Please Enter City Name") {
+    card.style.display = "block";
     weather.style.display = "none";
     errorMessage.style.display = "block";
+    spinner.style.display = "none";
     if (weatherData === "Please Enter City Name") {
       errorMessage.innerHTML = "Please Enter a City Name";
     } else {
@@ -118,6 +132,8 @@ const displayWeatherData = (weatherData) => {
     }
     iconImage.setAttribute("src", `./images/icons/unknown.png`);
     weatherContainer.style.backgroundImage = "none";
+  } else if (weatherData === "loading") {
+    spinner.style.display = "block";
   } else {
     const {
       tempInCelcius,
@@ -129,6 +145,8 @@ const displayWeatherData = (weatherData) => {
       iconId,
       weatherType,
     } = weatherData;
+    spinner.style.display = "none";
+    card.style.display = "block";
     temperature.innerHTML = tempInCelcius;
     weatherDescription.innerHTML = description;
     city.innerHTML = capitalizeFirstLetter(cityName);
@@ -147,5 +165,7 @@ const displayWeatherData = (weatherData) => {
     errorMessage.style.display = "none";
   }
 };
+
+displayWeatherData("loading");
 
 searchButton.addEventListener("click", getWeatherHandler);
