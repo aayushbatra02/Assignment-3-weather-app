@@ -51,16 +51,6 @@ const fetchData = async (lat, lon) => {
       };
     } else {
       console.log("ERROR! Wrong City Name");
-      return {
-        description: undefined,
-        tempInCelcius: undefined,
-        cityName: undefined,
-        countryName: undefined,
-        weatherType: undefined,
-        iconId: undefined,
-        humid: undefined,
-        wind: undefined,
-      };
     }
   } catch (e) {
     console.log(e);
@@ -97,12 +87,15 @@ const getWeatherForCurrentLocation = async () => {
 getWeatherForCurrentLocation();
 
 const getWeatherHandler = async () => {
-  if (input.value === "") {
-    alert("Enter City Name");
+  if (input.value.trim() === "") {
+    console.log("Enter City Name");
+    displayWeatherData("Please Enter City Name");
   } else {
     const { lat, lon } = await fetchLocation(input.value);
     const weatherData = await fetchData(lat, lon);
-    weatherData.cityName = input.value;
+    if (weatherData) {
+      weatherData.cityName = input.value;
+    }
     displayWeatherData(weatherData);
   }
 };
@@ -114,23 +107,28 @@ const capitalizeFirstLetter = (word) => {
   return word;
 };
 
-const displayWeatherData = ({
-  description,
-  tempInCelcius,
-  cityName,
-  countryName,
-  iconId,
-  weatherType,
-  wind,
-  humid,
-}) => {
-  if (description === undefined) {
+const displayWeatherData = (weatherData) => {
+  if (weatherData === undefined || weatherData === "Please Enter City Name") {
     weather.style.display = "none";
     errorMessage.style.display = "block";
-    errorMessage.innerHTML = "Invalid City";
+    if (weatherData === "Please Enter City Name") {
+      errorMessage.innerHTML = "Please Enter a City Name";
+    } else {
+      errorMessage.innerHTML = "Invalid City";
+    }
     iconImage.setAttribute("src", `./images/icons/unknown.png`);
     weatherContainer.style.backgroundImage = "none";
   } else {
+    const {
+      tempInCelcius,
+      description,
+      cityName,
+      countryName,
+      wind,
+      humid,
+      iconId,
+      weatherType,
+    } = weatherData;
     temperature.innerHTML = tempInCelcius;
     weatherDescription.innerHTML = description;
     city.innerHTML = capitalizeFirstLetter(cityName);
