@@ -25,8 +25,19 @@ const weatherTypes = [
   //7xx: Atmosphere there are many like Smoke, Mist, Haze, Fog etc will come in same category
 ];
 
+const showSpinner = () => {
+  card.style.display = "none";
+  spinner.style.display = "block";
+};
+
+const hideSpinner = () => {
+  card.style.display = "block";
+  spinner.style.display = "none";
+};
+
 const fetchData = async (lat, lon) => {
   try {
+    showSpinner();
     const response = await fetch(
       `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`
     );
@@ -41,7 +52,7 @@ const fetchData = async (lat, lon) => {
       const iconId = data.weather[0].icon;
       const humid = data.main.humidity;
       const wind = data.wind.speed;
-
+      hideSpinner();
       return {
         description,
         tempInCelcius,
@@ -54,19 +65,23 @@ const fetchData = async (lat, lon) => {
       };
     } else {
       console.log("ERROR! Wrong City Name");
+      return null;
     }
   } catch (e) {
     console.log(e);
+    throw e;
   }
 };
 
 const fetchLocation = async (cityName) => {
   try {
+    showSpinner();
     const response = await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${key}`
     );
     const data = await response.json();
     const { lat, lon } = data[0];
+    hideSpinner();
     return { lat, lon };
   } catch (e) {
     console.log(e);
@@ -76,7 +91,7 @@ const fetchLocation = async (cityName) => {
 
 const getWeatherForCurrentLocation = async () => {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(async function (position) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       const weatherData = await fetchData(latitude, longitude);
@@ -87,10 +102,12 @@ const getWeatherForCurrentLocation = async () => {
   }
 
   navigator.geolocation.watchPosition(
-    function (position) {},
-    function (error) {
-      if (error.code == error.PERMISSION_DENIED) card.style.display = "block";
-      spinner.style.display = "none";
+    () => {},
+    (error) => {
+      if (error.code == error.PERMISSION_DENIED) {
+        card.style.display = "block";
+        spinner.style.display = "none";
+      }
     }
   );
 };
@@ -133,7 +150,7 @@ const displayWeatherData = (weatherData) => {
     iconImage.setAttribute("src", `./images/icons/unknown.png`);
     weatherContainer.style.backgroundImage = "none";
   } else if (weatherData === "loading") {
-    spinner.style.display = "block";
+    showSpinner();
   } else {
     const {
       tempInCelcius,
@@ -145,8 +162,7 @@ const displayWeatherData = (weatherData) => {
       iconId,
       weatherType,
     } = weatherData;
-    spinner.style.display = "none";
-    card.style.display = "block";
+    hideSpinner();
     temperature.innerHTML = tempInCelcius;
     weatherDescription.innerHTML = description;
     city.innerHTML = capitalizeFirstLetter(cityName);
