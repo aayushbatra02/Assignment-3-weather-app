@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
     <title>Weather App</title>
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
@@ -23,7 +26,7 @@
             alt="Weather icon"
           />
         </div>
-        <div id="error-message">Invalid City</div>
+        <div id="error-message">Current Location Not Available</div>
         <div id="weather">
           <div id="temp-container">
             <span id="long"> <span id="temperature"></span>&#xb0;</span>C
@@ -33,9 +36,27 @@
             <span id="city"></span>,
             <span id="country"></span>
           </div>
+          <div id="wrapper">
+            <div class="icon-container">
+              <div class="icon2">
+                <img src="/images/icons/wind.png" alt="humidity-icon" />
+              </div>
+              <div><span id="wind-speed">6</span> Km/h</div>
+            </div>
+            <div class="icon-container">
+              <div class="icon2">
+                <img src="/images/icons/humidity.png" alt="humidity-icon" />
+              </div>
+              <div><span id="humidity">15</span>%</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <script
+      src="https://kit.fontawesome.com/89e9165f8b.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="./main/main.js"></script>
   </body>
 </html>

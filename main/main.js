@@ -8,6 +8,8 @@ const country = document.getElementById("country");
 const iconImage = document.getElementById("icon-image");
 const errorMessage = document.getElementById("error-message");
 const weatherContainer = document.getElementById("weather-container");
+const windSpeed = document.getElementById("wind-speed");
+const humidity = document.getElementById("humidity");
 
 const key = `82005d27a116c2880c8f0fcb866998a0`;
 const weatherTypes = [
@@ -27,6 +29,7 @@ const fetchData = async (lat, lon) => {
     );
     if (response.status === 200) {
       const data = await response.json();
+      console.log(data);
       const description = data.weather[0].description;
       const tempInKelvin = data.main.temp;
       const tempInCelcius = Math.floor(tempInKelvin - 273.15);
@@ -34,6 +37,9 @@ const fetchData = async (lat, lon) => {
       const countryName = data.sys.country;
       const weatherType = data.weather[0].main;
       const iconId = data.weather[0].icon;
+      const humid = data.main.humidity;
+      const wind = data.wind.speed;
+
       return {
         description,
         tempInCelcius,
@@ -41,6 +47,8 @@ const fetchData = async (lat, lon) => {
         countryName,
         weatherType,
         iconId,
+        humid,
+        wind,
       };
     } else {
       console.log("ERROR! Wrong City Name");
@@ -51,18 +59,12 @@ const fetchData = async (lat, lon) => {
         countryName: undefined,
         weatherType: undefined,
         iconId: undefined,
+        humid: undefined,
+        wind: undefined,
       };
     }
   } catch (e) {
     console.log(e);
-    return {
-      description: undefined,
-      tempInCelcius: undefined,
-      cityName: undefined,
-      countryName: undefined,
-      weatherType: undefined,
-      iconId: undefined,
-    };
   }
 };
 
@@ -113,8 +115,6 @@ const capitalizeFirstLetter = (word) => {
   return word;
 };
 
-capitalizeFirstLetter("AaYuSh");
-
 const displayWeatherData = ({
   description,
   tempInCelcius,
@@ -122,16 +122,21 @@ const displayWeatherData = ({
   countryName,
   iconId,
   weatherType,
+  wind,
+  humid,
 }) => {
   if (description === undefined) {
     weather.style.display = "none";
     errorMessage.style.display = "block";
     errorMessage.innerHTML = "Invalid City";
+    iconImage.setAttribute("src", `./images/icons/unknown.png`);
   } else {
     temperature.innerHTML = tempInCelcius;
     weatherDescription.innerHTML = description;
     city.innerHTML = capitalizeFirstLetter(cityName);
     country.innerHTML = countryName;
+    windSpeed.innerHTML = wind;
+    humidity.innerHTML = humid;
     iconImage.setAttribute("src", `./images/icons/${iconId}.png`);
     if (weatherTypes.includes(weatherType)) {
       weatherContainer.style.backgroundImage =

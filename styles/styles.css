@@ -22,16 +22,21 @@ img {
 
 #weather-container #search-container {
   margin: 0 auto 2rem auto;
-  width: fit-content;
-  height: 2.5rem;
+  width: 50%;
+  height: 3.5rem;
   display: flex;
 }
 
 #weather-container #search-container input {
-  padding: 0.5rem;
+  padding: 1rem;
   border: none;
   border-radius: 0.5rem 0 0 0.5rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  width: 80%;
+}
+
+#weather-container #search-container input:focus {
+  outline: none;
 }
 
 #weather-container #search-container button {
@@ -39,21 +44,27 @@ img {
   border: none;
   padding: 0.5rem 1rem;
   background-color: #a8cd9f;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 20%;
 }
 
 #weather-container #card {
   background-color: white;
-  width: 15rem;
+  width: 30%;
   margin: auto;
-  padding: 0.5rem 0 4rem 0;
+  padding: 1rem 0;
   text-align: center;
   border-radius: 0.5rem;
-  padding-bottom: 4rem;
+  font-size: 1.5rem;
 }
 
 #weather-container #card #weather {
   display: none;
+}
+
+#weather-container #card #weather #weather-description {
+  margin: 1rem 0 0.5rem 0;
 }
 
 #weather-container #card #title {
@@ -75,38 +86,77 @@ img {
 }
 
 #weather-container #card #weather #location {
-  font-size: small;
+  font-size: 1rem;
 }
 
+#weather-container #card #weather #wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+  gap: 2rem;
+}
+
+#weather-container #weather #wrapper .icon-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#weather-container #card #wrapper .icon2 {
+  width: 2rem;
+}
+
+/* desktop large */
+@media (min-width: 1440px) {
+  #weather-container #search-container {
+    height: 3.5rem;
+  }
+
+  #weather-container #card {
+    font-size: 1.5rem;
+  }
+
+  #weather-container #card #weather #weather-description {
+    margin: 1.2rem 0 0.7rem 0;
+  }
+
+  #weather-container #card #weather #location {
+    font-size: 1.2rem;
+  }
+
+  #weather-container #card #weather #wrapper { 
+    margin: 1.3rem;
+    gap: 4rem;
+  }
+}
+
+/* 4k */
 @media (min-width: 2400px) {
   #weather-container {
-    padding-top: 6rem;
+    padding: 3rem 0;
   }
 
   #weather-container #search-container {
     margin-bottom: 4rem;
-    height: 5rem;
+    height: 6.5rem;
   }
 
   #weather-container #search-container input {
-    padding: 1rem;
-    border: none;
     border-radius: 1rem 0 0 1rem;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
+    padding: 2rem;
   }
 
   #weather-container #search-container button {
     border-radius: 0 1rem 1rem 0;
     padding: 1rem 2rem;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
   }
 
   #weather-container #card {
-    width: 30rem;
-    padding: 1rem 0 8rem 0;
+    padding: 2rem 0;
     border-radius: 1rem;
-    padding-bottom: 8rem;
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   #weather-container #card #title {
@@ -121,15 +171,48 @@ img {
     font-size: 5rem;
   }
 
+  #weather-container #card #weather #wrapper {
+    gap: 6rem;
+  }
+
   #weather-container #card #weather #location {
     font-size: 1.5rem;
   }
 }
 
 
-@media (max-width:500px) {
-  #weather-container #search-container input, #weather-container #search-container button {
-    font-size: 0.8rem;
+@media (max-width: 1023px) {
+  #weather-container #search-container {
+    width: 70%;
+  }
+
+  #weather-container #card{
+    width: 55%;
   }
   
+}
+
+@media (max-width: 650px) {
+
+  #weather-container #search-container{
+    width: 90%    ;
+  }
+
+  #weather-container #search-container input {
+    width: 70%;
+    font-size: 1rem;
+  }
+
+  #weather-container #search-container button {
+    width: 30%;
+    font-size: 1rem;
+  }
+
+  #weather-container #card {
+    width: 90%;
+  }
+
+  #weather-container #card {
+    font-size: 1rem;
+  }
 }
