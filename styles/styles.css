@@ -14,7 +14,7 @@ img {
 }
 
 #weather-container {
-  background-image: url(/images/background/default.avif);
+  background-color: var(--background-color);
   height: 100vh;
   padding-top: 3rem;
   background-size: cover;

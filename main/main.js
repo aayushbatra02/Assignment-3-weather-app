@@ -29,7 +29,6 @@ const fetchData = async (lat, lon) => {
     );
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
       const description = data.weather[0].description;
       const tempInKelvin = data.main.temp;
       const tempInCelcius = Math.floor(tempInKelvin - 273.15);
@@ -130,6 +129,7 @@ const displayWeatherData = ({
     errorMessage.style.display = "block";
     errorMessage.innerHTML = "Invalid City";
     iconImage.setAttribute("src", `./images/icons/unknown.png`);
+    weatherContainer.style.backgroundImage = "none";
   } else {
     temperature.innerHTML = tempInCelcius;
     weatherDescription.innerHTML = description;
