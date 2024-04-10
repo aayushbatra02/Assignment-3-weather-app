@@ -109,6 +109,10 @@ img {
   font-size: 1rem;
 }
 
+#weather-container #card #weather #location #city {
+  text-transform: capitalize;
+}
+
 #weather-container #card #weather #wrapper {
   display: flex;
   justify-content: center;

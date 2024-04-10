@@ -122,12 +122,12 @@ const getWeatherHandler = async () => {
   }
 };
 
-const capitalizeFirstLetter = (word) => {
-  word = word.toLowerCase().split("");
-  word[0] = word[0].toUpperCase();
-  word = word.join("");
-  return word;
-};
+// const capitalizeFirstLetter = (word) => {
+//   word = word.toLowerCase().split("");
+//   word[0] = word[0].toUpperCase();
+//   word = word.join("");
+//   return word;
+// };
 
 const displayWeatherData = (weatherData) => {
   weatherContainer.appendChild(spinner);
@@ -159,7 +159,7 @@ const displayWeatherData = (weatherData) => {
     hideSpinner();
     temperature.innerHTML = tempInCelcius;
     weatherDescription.innerHTML = description;
-    city.innerHTML = capitalizeFirstLetter(cityName);
+    city.innerHTML = cityName;
     country.innerHTML = countryName;
     windSpeed.innerHTML = wind;
     humidity.innerHTML = humid;
