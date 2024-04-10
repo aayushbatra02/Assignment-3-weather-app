@@ -64,7 +64,7 @@ const fetchData = async (lat, lon) => {
         wind,
       };
     } else {
-      return undefined;
+      return false;
     }
   } catch (e) {
     throw e;
@@ -96,12 +96,15 @@ const getWeatherForCurrentLocation = async () => {
     });
   }
 
-  navigator.geolocation.watchPosition((() => {}), (error) => {
-    if (error.code == error.PERMISSION_DENIED) {
-      card.style.display = "block";
-      spinner.style.display = "none";
+  navigator.geolocation.watchPosition(
+    () => {},
+    (error) => {
+      if (error.code == error.PERMISSION_DENIED) {
+        card.style.display = "block";
+        spinner.style.display = "none";
+      }
     }
-  });
+  );
 };
 
 getWeatherForCurrentLocation();
@@ -128,7 +131,7 @@ const capitalizeFirstLetter = (word) => {
 
 const displayWeatherData = (weatherData) => {
   weatherContainer.appendChild(spinner);
-  if (weatherData === undefined || weatherData === "Please Enter City Name") {
+  if (!weatherData || weatherData === "Please Enter City Name") {
     card.style.display = "block";
     weather.style.display = "none";
     errorMessage.style.display = "block";
