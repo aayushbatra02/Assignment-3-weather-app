@@ -64,11 +64,9 @@ const fetchData = async (lat, lon) => {
         wind,
       };
     } else {
-      console.log("ERROR! Wrong City Name");
-      return null;
+      return undefined;
     }
   } catch (e) {
-    console.log(e);
     throw e;
   }
 };
@@ -84,8 +82,7 @@ const fetchLocation = async (cityName) => {
     hideSpinner();
     return { lat, lon };
   } catch (e) {
-    console.log(e);
-    return { lat: "not found", lon: "not found" };
+    return { lat: null, lon: null };
   }
 };
 
@@ -97,26 +94,20 @@ const getWeatherForCurrentLocation = async () => {
       const weatherData = await fetchData(latitude, longitude);
       displayWeatherData(weatherData);
     });
-  } else {
-    console.log("Geolocation is not supported by this browser.");
   }
 
-  navigator.geolocation.watchPosition(
-    () => {},
-    (error) => {
-      if (error.code == error.PERMISSION_DENIED) {
-        card.style.display = "block";
-        spinner.style.display = "none";
-      }
+  navigator.geolocation.watchPosition((() => {}), (error) => {
+    if (error.code == error.PERMISSION_DENIED) {
+      card.style.display = "block";
+      spinner.style.display = "none";
     }
-  );
+  });
 };
 
 getWeatherForCurrentLocation();
 
 const getWeatherHandler = async () => {
   if (input.value.trim() === "") {
-    console.log("Enter City Name");
     displayWeatherData("Please Enter City Name");
   } else {
     const { lat, lon } = await fetchLocation(input.value);
