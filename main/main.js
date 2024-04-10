@@ -122,13 +122,6 @@ const getWeatherHandler = async () => {
   }
 };
 
-// const capitalizeFirstLetter = (word) => {
-//   word = word.toLowerCase().split("");
-//   word[0] = word[0].toUpperCase();
-//   word = word.join("");
-//   return word;
-// };
-
 const displayWeatherData = (weatherData) => {
   weatherContainer.appendChild(spinner);
   if (!weatherData || weatherData === "Please Enter City Name") {
